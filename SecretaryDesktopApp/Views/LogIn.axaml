@@ -1,0 +1,86 @@
+﻿<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d" d:DesignWidth="300" d:DesignHeight="450"
+        x:Class="SecretaryDesktopApp.Views.LogIn"
+        Title="LogIn"
+        TransparencyLevelHint="Transparent"
+        Name="LoginWindow"
+        Classes="login">
+    <Window.Styles>
+        <StyleInclude Source="avares://SecretaryDesktopApp/Styles/MainStyles.axaml"/>
+        <Style Selector="Window.login">
+            <Setter Property="Width" Value="300"/>
+            <Setter Property="Height" Value="450"/>
+            <Setter Property="CanResize" Value="False"/>
+            <Setter Property="SystemDecorations" Value="None"/>
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="WindowStartupLocation" Value="CenterScreen"/>
+        </Style>
+        <Style Selector="Button.close">
+            <Setter Property="Content">
+                <Setter.Value>
+                    <Template>
+                        <Path Fill="Black" Data="M19,6.41L17.59,5L12,10.59L6.41,5L5,6.41L10.59,12L5,17.59L6.41,19L12,13.41L17.59,19L19,17.59L13.41,12L19,6.41Z" Stretch="Uniform"/>
+                    </Template>
+                </Setter.Value>
+            </Setter>
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="Command" Value="{Binding Close, ElementName=LoginWindow}"></Setter>
+        </Style>
+        <Style Selector="TextBlock.helvetica">
+            <Setter Property="FontFamily" Value="avares://Assets/Fonts/HelveticaLight.ttf"/>
+        </Style>
+        <Style Selector="TextBlock.header">
+            <Setter Property="FontSize" Value="20"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="Opacity" Value="0.7"/>
+        </Style>
+        
+        <Style Selector="Button.roundText">
+            <Setter Property="FontFamily" Value="avares://Assets/Fonts/HelveticaLight.ttf"/>
+            <Setter Property="FontSize" Value="12"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="CornerRadius" Value="10"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="Opacity" Value="0.7"/>
+            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="HorizontalAlignment" Value="Center"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="Background"/>
+            <Setter Property="BorderBrush" Value="#8056E8"/>
+        </Style>
+        
+        <Style Selector="Button.roundText:pointerover /template/ ContentPresenter#PART_ContentPresenter">
+            <Setter Property="TextBlock.Foreground" Value="White"/>
+            <Setter Property="BorderBrush" Value="White"/>
+        </Style>
+    </Window.Styles>
+    <Window.KeyBindings>
+        <KeyBinding Command="{Binding Close,ElementName=LoginWindow}" Gesture="Escape"/>
+    </Window.KeyBindings>
+    <Border Classes="background" CornerRadius="10">
+        <Grid RowDefinitions="20, *">
+        
+            <StackPanel Grid.Row="0" Orientation="Horizontal" HorizontalAlignment="Right">
+                <Button Classes="close" />
+            </StackPanel>
+        
+            <StackPanel Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Center">
+                <TextBlock Classes="helvetica header" HorizontalAlignment="Center">ВХОД</TextBlock>
+                <TextBox Classes="default" Watermark="Login"></TextBox>
+                <TextBox Classes="default" Watermark="Password"></TextBox>
+                <Button Classes="roundText"
+                        Width="100" Height="30" 
+                        Margin="0 10 0 0" 
+                        HorizontalAlignment="Center"
+                        Content="ВОЙТИ"/>
+            </StackPanel>
+        
+        </Grid>
+    </Border>
+    
+</Window>

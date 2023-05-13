@@ -1,0 +1,64 @@
+﻿<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:local="clr-namespace:SecretaryDesktopApp.Views"
+             xmlns:vm="clr-namespace:SecretaryDesktopApp.ViewModels"
+             xmlns:behaviors="clr-namespace:SecretaryDesktopApp.Behaviors"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="SecretaryDesktopApp.Views.ExcelLoader"
+             Name="ExcelLoaderControl">
+    <Design.DataContext>
+        <vm:ExcelLoaderViewModel/>
+    </Design.DataContext>
+    <Grid RowDefinitions="*, 80">
+        
+        
+        <Grid Grid.Row="0" ColumnDefinitions="3* Auto *">
+            <DataGrid Grid.Column="0" Items="{Binding ObjectsCollection}" AutoGenerateColumns="True"/>
+            <GridSplitter Grid.Column="1" BorderThickness="1" BorderBrush="Black"/>
+            <ListBox Grid.Column="2" Items="{Binding ColumnPropertyComparison}">
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <Grid ColumnDefinitions="*, Auto, *">
+                            <ComboBox Grid.Column="0" Items="{Binding #ExcelLoaderControl.DataContext.ColumnsNames}" SelectedItem="{Binding ColumnName}"/>
+                            <Path Grid.Column="1" Data=""/>
+                            <ComboBox Grid.Column="2" Items="{Binding #ExcelLoaderControl.DataContext.PropertiesName}" SelectedItem="{Binding PropertyName}"/>
+                        </Grid>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+        </Grid>
+        
+        <Grid Grid.Row="1" ColumnDefinitions="* * *" Margin="5 5 0 0">
+            <StackPanel Orientation="Vertical" >
+                <DockPanel Margin="0 0 0 5">
+                    <TextBlock DockPanel.Dock="Left" Margin="0 0 5 0">Файл: </TextBlock>
+                    <TextBox Text="{Binding FileName}" IsReadOnly="True" HorizontalAlignment="Stretch"/>
+                </DockPanel>
+                <Button
+                    behaviors:ExcelLoaderBehaviors.TheEvent="{x:Static Button.ClickEvent}"
+                    behaviors:ExcelLoaderBehaviors.TargetObject="{Binding RelativeSource={RelativeSource AncestorType=local:ExcelLoader}}"
+                    behaviors:ExcelLoaderBehaviors.AsyncMethodToCall="OpenFileDialog"
+                    behaviors:ExcelLoaderBehaviors.Command="{Binding OpenFile}"
+                    HorizontalAlignment="Center">
+                    Открыть файл
+                </Button>
+                
+            </StackPanel>
+            
+            <DockPanel Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Top">
+                <TextBlock DockPanel.Dock="Left" Margin="0 0 5 0" VerticalAlignment="Center">Лист:</TextBlock>
+                <ComboBox VerticalAlignment="Center" HorizontalAlignment="Stretch" 
+                          Items="{Binding SheetsNames}" 
+                          SelectedItem="{Binding SelectedSheet}"/>
+            </DockPanel>
+            
+            <StackPanel Grid.Column="2">
+                <Button  Command="{Binding ReadFile}">Загрузить данные</Button>
+            </StackPanel>
+        </Grid>
+    </Grid>
+    
+    
+</UserControl>

@@ -1,0 +1,61 @@
+﻿<Styles xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <Design.PreviewWith>
+        <Border Padding="20">
+            <!-- Add Controls for Previewer Here -->
+        </Border>
+    </Design.PreviewWith>
+
+    <Style Selector="TextBox.default">
+        <Setter Property="CornerRadius" Value="10"/>
+        <Setter Property="BorderBrush" Value="#8056E8"/>
+        <Setter Property="Background" Value="Transparent"/>
+        <Setter Property="Foreground" Value="White"></Setter>
+        <Setter Property="Margin" Value="0 5 0 0"></Setter>
+        <Setter Property="Opacity" Value="0.7"/>
+        <Setter Property="Width" Value="150"></Setter>
+    </Style>
+    <Style Selector="TextBox.default:pointerover /template/ Border#PART_BorderElement">
+        <Setter Property="Background" Value="#FAFAFA"/>
+        <Setter Property="BorderBrush" Value="White"/>
+        <Setter Property="Opacity" Value="0.6"/>
+    </Style>
+        
+    <Style Selector="TextBox.default:focus /template/ Border#PART_BorderElement">
+        <Setter Property="BorderBrush" Value="White"/>
+    </Style>
+        
+    <Style Selector="TextBox.default:focus">
+        <Setter Property="Foreground" Value="#8056E8"/>
+    </Style>
+    
+    <Style Selector="Border.background">
+        <Setter Property="Background">
+            <Setter.Value>
+                <!--<LinearGradientBrush StartPoint="100%, 0%" EndPoint="100%,100%" >
+                    <LinearGradientBrush.GradientStops>
+                        <GradientStop Offset="0.15" Color="#8056E8"/>
+                        <GradientStop Offset="1" Color="#FFD1BA"/>
+                    </LinearGradientBrush.GradientStops>
+                </LinearGradientBrush>-->
+                <LinearGradientBrush StartPoint="100%, 0%" EndPoint="100%,100%" >
+                    <LinearGradientBrush.GradientStops>
+                        <GradientStop Offset="0.15" Color="#916BEF"/>
+                        <GradientStop Offset="1" Color="#F3A279"/>
+                    </LinearGradientBrush.GradientStops>
+                </LinearGradientBrush>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="BorderBrush">
+            <Setter.Value>
+                <LinearGradientBrush StartPoint="100%, 0%" EndPoint="100%,100%" >
+                    <LinearGradientBrush.GradientStops>
+                        <GradientStop Offset="0.15" Color="#FFD1BA"/>
+                        <GradientStop Offset="1" Color="#8056E8"/>
+                    </LinearGradientBrush.GradientStops>
+                </LinearGradientBrush>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="BorderThickness" Value="1"/>
+    </Style>
+</Styles>

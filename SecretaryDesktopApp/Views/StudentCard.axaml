@@ -1,0 +1,96 @@
+﻿<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:models="clr-namespace:SecretaryDesktopApp.Models"
+             mc:Ignorable="d" d:DesignWidth="400" d:DesignHeight="700"
+             x:Class="SecretaryDesktopApp.Views.StudentCard">
+    <UserControl.Styles>
+        
+        <StyleInclude Source="avares://SecretaryDesktopApp/Styles/MainStyles.axaml"/>
+        <Style Selector="TextBlock.plainText">
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="Margin" Value="5 0 0 0"/>
+            <Setter Property="FontFamily" Value="avares://Assets/Fonts/HelveticaLight.ttf"/>
+            <Setter Property="FontSize" Value="12"></Setter>
+            <Setter Property="HorizontalAlignment" Value="Center"></Setter>
+            <Setter Property="VerticalAlignment" Value="Center"></Setter>
+        </Style>
+        
+       
+    </UserControl.Styles>
+    <Border Classes="background">
+       
+       <StackPanel>
+           <Grid ColumnDefinitions="150 *" Margin="10 15 10 0">
+               <Border Width="150" Height="150" BorderBrush="Black" BorderThickness="1" VerticalAlignment="Center"/>
+               <Grid Grid.Column="1" ColumnDefinitions="80, *" RowDefinitions="* * * * *" Height="200" VerticalAlignment="Center"> 
+                   <TextBlock Grid.Column="0" Grid.Row="0" Classes="plainText">Фамилия</TextBlock>
+                   <TextBox Grid.Column="1" Grid.Row="0" Classes="default"/>
+                   <TextBlock Grid.Column="0" Grid.Row="1" Classes="plainText">Имя</TextBlock>
+                   <TextBox Grid.Column="1" Grid.Row="1" Classes="default"/>
+                   <TextBlock Grid.Column="0" Grid.Row="2" Classes="plainText">Отчество</TextBlock>
+                   <TextBox Grid.Column="1" Grid.Row="2" Classes="default"/>
+                   <TextBlock Grid.Column="0" Grid.Row="3" Classes="plainText">Институт</TextBlock>
+                   <TextBox Grid.Column="1" Grid.Row="3" Classes="default"/>
+                   <TextBlock Grid.Column="0" Grid.Row="4" Classes="plainText">Группа</TextBlock>
+                   <TextBox Grid.Column="1" Grid.Row="4" Classes="default"/>
+               </Grid>
+           </Grid>
+           
+           <Grid ColumnDefinitions="120 *" RowDefinitions="* *"
+                 Margin="0 30 0 0"
+                 HorizontalAlignment="Left">
+               <TextBlock Grid.Column="0" Grid.Row="0" Classes="plainText">Дата вступления</TextBlock>
+               <TextBox Grid.Column="1" Grid.Row="0" Classes="default"/>
+               <TextBlock Grid.Column="0" Grid.Row="1" Classes="plainText">Дата выхода</TextBlock>
+               <TextBox Grid.Column="1" Grid.Row="1" Classes="default"/>
+           </Grid>
+           
+           <Grid RowDefinitions="* *" Margin="0 20 0 0">
+               <TextBlock Grid.Row="0" Classes="plainText">Последнее продление</TextBlock>
+               <!--ProlongationTable-->
+           </Grid>
+           
+           <Grid RowDefinitions="* *" Margin="0 20 0 0">
+               <TextBlock Grid.Row="0" Classes="plainText">Активности</TextBlock>
+               <ListBox Grid.Row="1">
+                   <ListBox.Items>
+                       <models:BonusModel>
+                           <models:BonusModel.description>TestDescrition</models:BonusModel.description>
+                           <models:BonusModel.title>Test</models:BonusModel.title>
+                       </models:BonusModel>
+                   </ListBox.Items>
+                   <ListBox.Styles>
+                       <Style Selector="ListBox">
+                           <Setter Property="ItemTemplate">
+                               <Setter.Value>
+                                   <DataTemplate>
+                                       <Border Background="Transparent" BorderBrush="#8056E8" BorderThickness="0 0 0 1">
+                                           <Grid ColumnDefinitions="90 *">
+                                               <TextBlock Text="{Binding title}"/>
+                                               <TextBlock Grid.Column="1" Text="{Binding description}"/>
+                                           </Grid>
+                                       </Border>
+                                   </DataTemplate>
+                               </Setter.Value>
+                           </Setter>
+                           <Setter Property="Background" Value="Transparent"/>
+                           <Setter Property="Foreground" Value="White"/>
+                           <Setter Property="BorderThickness" Value="1"/>
+                           <Setter Property="CornerRadius" Value="10"/>
+                           <Setter Property="BorderBrush" Value="#8056E8"/>
+                           <!--<Setter Property="Template">
+                               <Setter.Value>
+                                   <ControlTemplate TargetType="ListBox">
+                                       
+                                   </ControlTemplate>
+                               </Setter.Value>
+                           </Setter>-->
+                       </Style>
+                   </ListBox.Styles>
+               </ListBox>
+           </Grid>
+       </StackPanel>
+   </Border>
+</UserControl>

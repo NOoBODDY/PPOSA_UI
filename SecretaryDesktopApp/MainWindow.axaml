@@ -1,0 +1,67 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:views="clr-namespace:SecretaryDesktopApp.Views"
+        xmlns:vm="clr-namespace:SecretaryDesktopApp.ViewModels"
+        xmlns:controls="clr-namespace:SecretaryDesktopApp.Controls"
+        xmlns:converters="clr-namespace:SecretaryDesktopApp.Converters"
+        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+        x:Class="SecretaryDesktopApp.MainWindow"
+        Title="SecretaryDesktopApp" >
+    <Window.Resources>
+        <converters:StringToGeometryConverter x:Key="StringToGeometryConverter"/>
+        <converters:Base64ToBitmapConverter x:Key="Base64ToBitmapConverter"></converters:Base64ToBitmapConverter>
+    </Window.Resources>
+    <Design.DataContext>
+        <vm:MainWindowViewModel/>
+    </Design.DataContext>
+    <DockPanel>
+        <DockPanel Dock="Left" Classes="wrapped" >
+            <DockPanel.Transitions>
+                <Transitions>
+                    <DoubleTransition Property="Width" Duration="0:0:0.5" Delay="0:0:1"/>
+                </Transitions>
+            </DockPanel.Transitions>
+            <Grid DockPanel.Dock="Bottom" ColumnDefinitions="50, *">
+                <Image Width="40" Source="{Binding User.Avatar, Converter={StaticResource Base64ToBitmapConverter}}"></Image>
+                <StackPanel Grid.Column="1" Orientation="Vertical">
+                    <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" Text="{Binding User.FullName}"></TextBlock>
+                    <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" Text="{Binding User.Username}"></TextBlock>
+                </StackPanel>
+            </Grid>
+            
+            <!--Меню-->
+            <ListBox Margin="0"
+                     Items="{Binding Pages}" 
+                     SelectedItem="{Binding SelectedPage}"
+                     Padding="-12 0">
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <Grid ColumnDefinitions="50 *">
+                                <Path  
+                                      Width="25" Height="25"
+                                      Margin=" 0 0 5 0"
+                                      VerticalAlignment="Center"
+                                      Stroke="Black"
+                                      Fill="Black"
+                                      Data="{Binding IconData, Converter={StaticResource StringToGeometryConverter}}"/>
+                                <TextBlock Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Center" Text="{Binding Title}"/>
+                            </Grid>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+            
+        </DockPanel>
+        <ContentControl Content="{Binding SelectedPage}"/>
+    </DockPanel>
+    
+    <Window.Styles>
+        <Style Selector="DockPanel.wrapped">
+            <Setter Property="Width" Value="50"/>
+        </Style>
+        <Style Selector="DockPanel.wrapped:pointerover">
+            <Setter Property="Width" Value="200"/>
+        </Style>
+    </Window.Styles>
+</Window>
