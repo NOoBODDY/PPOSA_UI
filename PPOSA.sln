@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PDFViewer", "PDFViewer\PDFViewer.csproj", "{072E9596-FEAA-46D1-BAC0-E0D7B67EDEC3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExcelLoader", "ExcelLoader\ExcelLoader.csproj", "{0A521577-4969-4C7D-A6BF-8FA9E3D694BA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SecretaryDesktopApp", "SecretaryDesktopApp\SecretaryDesktopApp.csproj", "{D856F9D4-CFC0-462C-AE9F-AECD26190400}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{072E9596-FEAA-46D1-BAC0-E0D7B67EDEC3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{072E9596-FEAA-46D1-BAC0-E0D7B67EDEC3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{072E9596-FEAA-46D1-BAC0-E0D7B67EDEC3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{072E9596-FEAA-46D1-BAC0-E0D7B67EDEC3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0A521577-4969-4C7D-A6BF-8FA9E3D694BA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0A521577-4969-4C7D-A6BF-8FA9E3D694BA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0A521577-4969-4C7D-A6BF-8FA9E3D694BA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0A521577-4969-4C7D-A6BF-8FA9E3D694BA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D856F9D4-CFC0-462C-AE9F-AECD26190400}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D856F9D4-CFC0-462C-AE9F-AECD26190400}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D856F9D4-CFC0-462C-AE9F-AECD26190400}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D856F9D4-CFC0-462C-AE9F-AECD26190400}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
