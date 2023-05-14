@@ -8,7 +8,7 @@
         xmlns:converters="clr-namespace:SecretaryDesktopApp.Converters"
         mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
         x:Class="SecretaryDesktopApp.MainWindow"
-        Title="SecretaryDesktopApp" >
+        Title="{Binding Title}" >
     <Window.Resources>
         <converters:StringToGeometryConverter x:Key="StringToGeometryConverter"/>
         <converters:Base64ToBitmapConverter x:Key="Base64ToBitmapConverter"></converters:Base64ToBitmapConverter>

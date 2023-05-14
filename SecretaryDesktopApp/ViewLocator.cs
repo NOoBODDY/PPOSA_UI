@@ -10,13 +10,21 @@ public class ViewLocator:IDataTemplate
 {
     public IControl Build(object param)
     {
-        if (param is ExcelLoaderViewModel)
-            return new Views.ExcelLoader();
-        return new TextBlock(){Text = param.ToString()};
+        var name = param.GetType()!.FullName!.Replace("ViewModel", "View");
+        var type = Type.GetType(name);
+        
+        if (type != null)
+        {
+            return (Control)Activator.CreateInstance(type)!;
+        }
+        else
+        {
+            return new TextBlock { Text = "Not Found: " + name };
+        }
     }
 
     public bool Match(object data)
     {
-        return (data is ExcelLoaderViewModel);
+        return (data is PageBaseViewModel);
     }
 }

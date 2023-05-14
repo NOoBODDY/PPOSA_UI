@@ -3,28 +3,101 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:models="clr-namespace:SecretaryDesktopApp.Models"
+             xmlns:system="clr-namespace:System;assembly=System.Runtime"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="SecretaryDesktopApp.Controls.StudentGridControl">
     
-    <ScrollViewer >
         <DataGrid Name="PART_DataGrid" CanUserReorderColumns="False" 
-                  CanUserResizeColumns="True" 
-                  CanUserSortColumns="True"
+                  RowDetailsVisibilityMode="VisibleWhenSelected"
+                  LoadingRowDetails="PART_DataGrid_OnLoadingRowDetails"
                   HorizontalScrollBarVisibility="Auto"
                   VerticalScrollBarVisibility="Auto"
+                  IsReadOnly="True"
         >
+            <DataGrid.DataTemplates>
+                <DataTemplate DataType="{x:Type system:Boolean}">
+                    <TextBlock Classes.green="{Binding }" Classes.red="{Binding !$self}">
+                        <TextBlock.Styles>
+                            <Style Selector="TextBlock.red">
+                                <Setter Property="Foreground" Value="Red"/>
+                                <Setter Property="Text" Value="Не продлен"/>
+                            </Style>
+                            <Style Selector="TextBlock.green">
+                                <Setter Property="Foreground" Value="Green"/>
+                                <Setter Property="Text" Value="Продлен"/>
+                            </Style>
+                        </TextBlock.Styles>
+                    </TextBlock>
+                </DataTemplate>
+            </DataGrid.DataTemplates>
             <DataGrid.Styles>
                 <Style Selector="DataGrid">
                     <Setter Property="RowDetailsTemplate">
                         <Setter.Value>
                             <DataTemplate>
-                                <TextBlock Text="{Binding Firstname}" FontFamily=""></TextBlock>
+                                <DockPanel>
+                                    <ItemsControl Items="{Binding TicketExtensions}" DockPanel.Dock="Right" >
+                                        <ItemsControl.ItemTemplate>
+                                            <DataTemplate>
+                                                <Grid ColumnDefinitions="* *">
+                                                    <TextBlock Text="{Binding SemesterTitle}" Foreground="Black"/>
+                                                    <TextBlock Grid.Column="1" Classes.green="{Binding Payment}" Classes.red="{Binding !Payment}"/>
+                                                </Grid>
+                                            </DataTemplate>
+                                        </ItemsControl.ItemTemplate>
+                                        <ItemsControl.Styles>
+                                            <Style Selector="TextBlock.red">
+                                                <Setter Property="Foreground" Value="Red"/>
+                                                <Setter Property="Text" Value="Не продлен"/>
+                                            </Style>
+                                            <Style Selector="TextBlock.green">
+                                                <Setter Property="Foreground" Value="Green"/>
+                                                <Setter Property="Text" Value="Продлен"/>
+                                            </Style>
+                                        </ItemsControl.Styles>
+                                    </ItemsControl>
+                                    
+                                    <Grid RowDefinitions="* *" ColumnDefinitions="* * *">
+                                        
+                                        <DockPanel Grid.Row="0" Grid.Column="0" >
+                                            <TextBlock DockPanel.Dock="Left" Text="Email: "/>
+                                            <TextBlock Text="{Binding AdditionalInfo.Email}"/>
+                                        </DockPanel>
+                                        <DockPanel Grid.Row="1" Grid.Column="0" >
+                                            <TextBlock DockPanel.Dock="Left" Text="Телефон: "/>
+                                            <TextBlock Text="{Binding AdditionalInfo.Phone}"/>
+                                        </DockPanel>
+
+                                        <DockPanel Grid.Row="0" Grid.Column="1" >
+                                            <TextBlock DockPanel.Dock="Left" Text="Дата вступления: "/>
+                                            <TextBlock Text="{Binding AdditionalInfo.DateOfEntry}"/>
+                                        </DockPanel>
+
+                                        <DockPanel Grid.Row="1" Grid.Column="1" >
+                                            <TextBlock DockPanel.Dock="Left" Text="Дата выхода: "/>
+                                            <TextBlock Text="{Binding AdditionalInfo.DateOfLeaving}"/>
+                                        </DockPanel>
+
+                                        <DockPanel Grid.Row="0" Grid.Column="2" >
+                                            <TextBlock DockPanel.Dock="Left" Text="Адрес: "/>
+                                            <TextBlock Text="{Binding AdditionalInfo.Address}"/>
+                                        </DockPanel>
+
+                                        <DockPanel Grid.Row="1" Grid.Column="2" >
+                                            <TextBlock DockPanel.Dock="Left" Text="Статус: "/>
+                                            <TextBlock Text="{Binding AdditionalInfo.Status}"/>
+                                        </DockPanel>
+
+                                        
+                                    </Grid>
+                                    
+                                </DockPanel>
                             </DataTemplate>
                         </Setter.Value>
                     </Setter>
                 </Style>
             </DataGrid.Styles>
         </DataGrid>
-    </ScrollViewer>
     
 </UserControl>
+<!---->

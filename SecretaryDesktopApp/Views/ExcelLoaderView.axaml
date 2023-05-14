@@ -6,7 +6,7 @@
              xmlns:vm="clr-namespace:SecretaryDesktopApp.ViewModels"
              xmlns:behaviors="clr-namespace:SecretaryDesktopApp.Behaviors"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
-             x:Class="SecretaryDesktopApp.Views.ExcelLoader"
+             x:Class="SecretaryDesktopApp.Views.ExcelLoaderView"
              Name="ExcelLoaderControl">
     <Design.DataContext>
         <vm:ExcelLoaderViewModel/>
@@ -38,7 +38,7 @@
                 </DockPanel>
                 <Button
                     behaviors:ExcelLoaderBehaviors.TheEvent="{x:Static Button.ClickEvent}"
-                    behaviors:ExcelLoaderBehaviors.TargetObject="{Binding RelativeSource={RelativeSource AncestorType=local:ExcelLoader}}"
+                    behaviors:ExcelLoaderBehaviors.TargetObject="{Binding RelativeSource={RelativeSource AncestorType=local:ExcelLoaderView}}"
                     behaviors:ExcelLoaderBehaviors.AsyncMethodToCall="OpenFileDialog"
                     behaviors:ExcelLoaderBehaviors.Command="{Binding OpenFile}"
                     HorizontalAlignment="Center">

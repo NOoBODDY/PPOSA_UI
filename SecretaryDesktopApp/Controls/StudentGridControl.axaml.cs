@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.ComponentModel;
@@ -8,9 +7,9 @@ using System.Windows.Input;
 using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Data;
-using Avalonia.Input;
 using Avalonia.Markup.Xaml;
 using SecretaryDesktopApp.Models;
+using SecretaryDesktopApp.Models.DTO;
 
 namespace SecretaryDesktopApp.Controls;
 
@@ -34,9 +33,7 @@ public partial class StudentGridControl : UserControl
         AvaloniaXamlLoader.Load(this);
         
     }
-   
-    
-    #region StyledProperties
+   #region StyledProperties
 
     /// <summary>
     /// Identifies the ItemsSource dependency property.
@@ -46,8 +43,7 @@ public partial class StudentGridControl : UserControl
             nameof(Items),
             o => o.Items,
             (o, v) => o.Items = v);
-
-    private IEnumerable _items;
+    
     
     /// <summary>
     /// Gets or sets a collection that is used to generate the content of the control.
@@ -61,13 +57,25 @@ public partial class StudentGridControl : UserControl
     
     public static readonly DirectProperty<StudentGridControl, ICommand> SortingProperty =
         AvaloniaProperty.RegisterDirect<StudentGridControl, ICommand>(nameof(Sorting),
-            button => button.Sorting, (button, command) => button.Sorting = command, enableDataValidation: true);
+            button => button.Sorting!, (button, command) => button.Sorting = command, enableDataValidation: true);
 
     private ICommand _sorting;
     public ICommand? Sorting
     {
         get => _sorting;
-        set =>  SetAndRaise(SortingProperty, ref _sorting, value);
+        set =>  SetAndRaise(SortingProperty!, ref _sorting!, value);
+    }
+    
+    
+    public static readonly DirectProperty<StudentGridControl, ICommand> LoadAdditionalInfoProperty =
+        AvaloniaProperty.RegisterDirect<StudentGridControl, ICommand>(nameof(LoadAdditionalInfo),
+            button => button.LoadAdditionalInfo!, (button, command) => button.LoadAdditionalInfo = command, enableDataValidation: true);
+
+    private ICommand _loadAdditionalInfo;
+    public ICommand? LoadAdditionalInfo
+    {
+        get => _loadAdditionalInfo;
+        set =>  SetAndRaise(LoadAdditionalInfoProperty!, ref _loadAdditionalInfo!, value);
     }
     
     public static readonly StyledProperty<object> SortingParameterProperty =
@@ -81,17 +89,21 @@ public partial class StudentGridControl : UserControl
     }
 
     public static StyledProperty<ObservableCollection<StudentColumnActivation>> StudentColumnActivationsProperty =
-        AvaloniaProperty.Register<StudentGridControl, ObservableCollection<StudentColumnActivation>>(nameof(StudentColumnActivations), default, false, BindingMode.Default, null, null, Notifying);
+        AvaloniaProperty.Register<StudentGridControl, ObservableCollection<StudentColumnActivation>>(nameof(StudentColumnActivations), default!, false, BindingMode.Default, null, null, Notifying);
 
     private static void Notifying(IAvaloniaObject avaloniaObject, bool arg2)
     {
         if (avaloniaObject is not StudentGridControl studentGridControl) return;
-        studentGridControl.StudentColumnActivations.CollectionChanged+= StudentColumnActivationsOnCollectionChanged;
-        foreach (var studentColumnActivation in studentGridControl.StudentColumnActivations)
+        if (studentGridControl.StudentColumnActivations != null!)
         {
-            studentColumnActivation.PropertyChanged+= studentGridControl.ColumnChanged;
-            studentGridControl.AddColumn(studentColumnActivation);
-            
+            studentGridControl.StudentColumnActivations.CollectionChanged +=
+                StudentColumnActivationsOnCollectionChanged;
+            foreach (var studentColumnActivation in studentGridControl.StudentColumnActivations)
+            {
+                studentColumnActivation.PropertyChanged += studentGridControl.ColumnChanged;
+                studentGridControl.AddColumn(studentColumnActivation);
+
+            }
         }
     }
 
@@ -111,7 +123,7 @@ public partial class StudentGridControl : UserControl
         switch (e.Action)
         {
             case NotifyCollectionChangedAction.Add:
-                foreach (var item in e.NewItems)
+                foreach (var item in e.NewItems!)
                 {
                     if (item is StudentColumnActivation studentColumnActivation)
                     {
@@ -122,7 +134,7 @@ public partial class StudentGridControl : UserControl
                 break;
             case NotifyCollectionChangedAction.Reset:
             case NotifyCollectionChangedAction.Remove:
-                foreach (var item in e.OldItems)
+                foreach (var item in e.OldItems!)
                 {
                     if (item is StudentColumnActivation studentColumnActivation)
                         studentColumnActivation.PropertyChanged-= studentGridControl.ColumnChanged;
@@ -134,7 +146,7 @@ public partial class StudentGridControl : UserControl
 
     private void AddColumn(StudentColumnActivation studentColumnActivation)
     {
-        if (_dataGrid.Columns.FirstOrDefault(column=> column.Header as string == studentColumnActivation.ColumnName) == default)
+        if (_dataGrid.Columns.FirstOrDefault(column=> column.Header as TableColumnHeader == studentColumnActivation.ColumnName) == default)
             _dataGrid.Columns.Add(new DataGridTextColumn(){ Binding = studentColumnActivation.Binding, IsVisible = studentColumnActivation.IsActive, Header = studentColumnActivation.ColumnName});
     }
     private void ColumnChanged(object? sender, PropertyChangedEventArgs e)
@@ -144,7 +156,7 @@ public partial class StudentGridControl : UserControl
         {
             var column =
                 _dataGrid.Columns.FirstOrDefault(
-                    column => column.Header as string == studentColumnActivation.ColumnName);
+                    column => column.Header as TableColumnHeader == studentColumnActivation.ColumnName);
             if (column is { })
             {
                 column.IsVisible = studentColumnActivation.IsActive;
@@ -152,19 +164,25 @@ public partial class StudentGridControl : UserControl
         }
     }
 
-    public void CanExecuteChanged(object sender, EventArgs e)
-    {
-        throw new NotImplementedException();
-    }
+    private bool _sortingDesc = false;
     
     private void DataGridOnSorting(object? sender, DataGridColumnEventArgs e)
     {
-        if (!e.Handled && Sorting?.CanExecute(SortingParameter) == true)
+        if (!e.Handled && Sorting?.CanExecute(e) == true && e.Column.Header is TableColumnHeader header)
         {
-            Sorting.Execute(SortingParameter);
-            e.Handled = true;
+            _sortingDesc = !_sortingDesc;
+            Sorting.Execute(new SortingEventArg(_sortingDesc, header.OriginalName));
         }
     }
 
-    
+    public record SortingEventArg(bool IsDesc, string ColumnName);
+
+
+    private void PART_DataGrid_OnLoadingRowDetails(object? sender, DataGridRowDetailsEventArgs e)
+    {
+        if (LoadAdditionalInfo is not null && e.Row.DataContext is Student student)
+        {
+            LoadAdditionalInfo.Execute(student);
+        }
+    }
 }

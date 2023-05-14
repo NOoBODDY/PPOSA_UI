@@ -3,11 +3,13 @@ using SecretaryDesktopApp.Models.DTO;
 
 namespace SecretaryDesktopApp.ViewModels;
 
-public class MainWindowViewModel:NotifyBase
+public class MainWindowViewModel:PageBaseViewModel
 {
     public MainWindowViewModel()
     {
+        Title = "Приложение";
         _pages = new ObservableCollection<PageBaseViewModel>();
+        _pages.Add(new StudentsViewModel());
         _pages.Add(new ExcelLoaderViewModel());
         User = new UserModel()
         {

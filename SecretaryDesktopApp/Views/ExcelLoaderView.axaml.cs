@@ -7,9 +7,9 @@ using Avalonia.Markup.Xaml;
 
 namespace SecretaryDesktopApp.Views;
 
-public partial class ExcelLoader : UserControl
+public partial class ExcelLoaderView : UserControl
 {
-    public ExcelLoader()
+    public ExcelLoaderView()
     {
         InitializeComponent();
     }

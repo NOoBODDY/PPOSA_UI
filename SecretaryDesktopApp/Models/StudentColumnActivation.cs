@@ -6,12 +6,12 @@ namespace SecretaryDesktopApp.Models;
 public class StudentColumnActivation:NotifyBase
 {
 
-    private string _columnName;
+    private TableColumnHeader _columnName;
     private bool _isActive;
 
     private IBinding _binding;
 
-    public string ColumnName
+    public TableColumnHeader ColumnName
     {
         get => _columnName;
         set => Update(ref _columnName, value);
@@ -29,7 +29,7 @@ public class StudentColumnActivation:NotifyBase
         set => Update(ref _binding, value);
     }
 
-    public StudentColumnActivation(string columnName,  IBinding binding, bool isActive)
+    public StudentColumnActivation(TableColumnHeader columnName,  IBinding binding, bool isActive)
     {
         _columnName = columnName;
         _isActive = isActive;

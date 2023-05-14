@@ -19,6 +19,8 @@ namespace SecretaryDesktopApp
             {
                 desktop.MainWindow = new MainWindow();
                 desktop.MainWindow.DataContext = new MainWindowViewModel();
+                /*desktop.MainWindow = new TestWindow();
+                desktop.MainWindow.DataContext = new StudentsViewModel();*/
             }
 
             base.OnFrameworkInitializationCompleted();

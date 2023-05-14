@@ -4,6 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:viewModels="clr-namespace:SecretaryDesktopApp.ViewModels"
              xmlns:controls="clr-namespace:SecretaryDesktopApp.Controls"
+             xmlns:behaviors="clr-namespace:SecretaryDesktopApp.Behaviors"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="SecretaryDesktopApp.Views.StudentsView">
     <Design.DataContext>
@@ -28,8 +29,11 @@
             </ItemsControl>
         </Expander>
         
-        <controls:StudentGridControl Grid.Row="1" Items="{Binding Students}"
-                                     StudentColumnActivations="{Binding ColumnActivations}">
+        <controls:StudentGridControl Grid.Row="1" Items="{Binding Students, Mode=OneWay}"
+                                     StudentColumnActivations="{Binding ColumnActivations}"
+                                     Sorting="{Binding Sorting}"
+                                     LoadAdditionalInfo="{Binding LoadAdditionalInfo}"
+                                     >
             </controls:StudentGridControl>
     </Grid>
     
